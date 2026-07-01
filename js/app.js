@@ -26,6 +26,7 @@ import { toast, confirm, success } from "./ui/notify.js";
 let allProducts = [];
 let categories = [];
 let activeCategory = null;
+let sortOrder = "";
 
 function refreshCart() {
   renderCart(getItems(), getTotal());
@@ -38,12 +39,27 @@ async function loadProducts(category = null) {
     allProducts = category
       ? await getProductsByCategory(category)
       : await getProducts();
-    renderProducts(allProducts);
+    applyFilters();
   } catch (e) {
     toast(e.message, "error");
   } finally {
     hideLoading();
   }
+}
+
+function applyFilters() {
+  const query = document.getElementById("search-input").value.trim().toLowerCase();
+  let products = query
+    ? allProducts.filter((p) => p.title.toLowerCase().includes(query))
+    : allProducts;
+
+  if (sortOrder === "asc") {
+    products = [...products].sort((a, b) => a.price - b.price);
+  } else if (sortOrder === "desc") {
+    products = [...products].sort((a, b) => b.price - a.price);
+  }
+
+  renderProducts(products);
 }
 
 //  manejar eventos
@@ -95,12 +111,13 @@ async function onCategoryClick(e) {
   await loadProducts(activeCategory);
 }
 
-function onSearch(e) {
-  const query = e.target.value.trim().toLowerCase();
-  const filtered = query
-    ? allProducts.filter((p) => p.title.toLowerCase().includes(query))
-    : allProducts;
-  renderProducts(filtered);
+function onSearch() {
+  applyFilters();
+}
+
+function onSortChange(e) {
+  sortOrder = e.target.value;
+  applyFilters();
 }
 
 async function onClearCart() {
@@ -144,6 +161,7 @@ async function init() {
     .getElementById("category-bar")
     .addEventListener("click", onCategoryClick);
   document.getElementById("search-input").addEventListener("input", onSearch);
+  document.getElementById("sort-select").addEventListener("change", onSortChange);
   document
     .getElementById("clear-cart-btn")
     .addEventListener("click", onClearCart);

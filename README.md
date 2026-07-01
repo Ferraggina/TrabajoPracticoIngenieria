@@ -1,6 +1,6 @@
 # TiendaJS — E-commerce SPA
 
-Trabajo Práctico para la materia **Laboratorio de Aplicaciones Web Cliente** (ISTEA).
+Trabajo Práctico para la materia **Ingenieria de software** (ISTEA).
 Alumno: Cristian Ferraggina.
 
 ## Stack
