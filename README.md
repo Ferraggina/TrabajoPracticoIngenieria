@@ -34,3 +34,18 @@ js/
   utils/format.js             ← formato de precio
   app.js                      ← orquestador de eventos
 ```
+
+## Cómo ejecutar
+
+1. Cloná el repo: `git clone https://github.com/Ferraggina/TrabajoPracticoIngenieria.git`
+2. Abrí `index.html` en el navegador (o usá Live Server)
+
+## Docker
+
+Build: `docker build -t tiendajs .`
+Run: `docker run -d -p 8080:80 tiendajs`
+
+## Links
+
+- GitHub: https://github.com/Ferraggina/TrabajoPracticoIngenieria
+- Docker Hub: https://hub.docker.com/r/ferraggina/tiendajs
